@@ -1,3 +1,4 @@
+from typing import ClassVar
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -6,7 +7,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = ""
     DEBUG: bool = False
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(env_file=".env")
 
 settings = Settings()
 

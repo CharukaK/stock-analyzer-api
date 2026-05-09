@@ -14,7 +14,7 @@ returns:
 }
 ```
 
-The API will provide information on high, low, and volume by aggregating 12 monthly data
+The API should provide information on high, low, and volume by aggregating 12 monthly data
 points for the particular stock symbol provided
 
 ```
@@ -130,4 +130,7 @@ TABLE prices_monthly {
 ## 3rd party dependencies used
 - Pydantic: helps with type checking and data validation
 - FastAPI: framework for building APIs
+- Pydantic Settings: helps with managing environment variable and configurations
+- httpx: provides a HTTP clientn with async capabilities
+
 

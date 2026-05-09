@@ -8,11 +8,17 @@ install:
 	@$(BIN)/$(PIP) install --upgrade pip
 	@$(BIN)/$(PIP) install -r requirements.txt
 
+install-dev:
+	@$(PYTHON) -m venv $(VENV)
+	@$(BIN)/$(PIP) install --upgrade pip
+	@$(BIN)/$(PIP) install -r requirements-dev.txt
+
 test: 
 	@$(BIN)/pytest
 
 create_db:
 	@sqlite3 stock_analyzer.db < db/schema.sql
+
 run-dev: create_db
 	@fastapi dev
 
