@@ -1,6 +1,6 @@
 PYTHON = python3
 PIP = pip
-VENV = venv
+VENV = .venv
 BIN = $(VENV)/bin
 
 install:

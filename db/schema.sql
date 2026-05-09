@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS symbols(
     time_zone TEXT
 );
 
-CREATE TABLE IF NOT EXISTS prices_daily(
+CREATE TABLE IF NOT EXISTS prices_monthly(
     symbol TEXT,
     month_start_date TEXT,
     last_refreshed TEXT,
