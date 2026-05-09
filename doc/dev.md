@@ -131,6 +131,3 @@ TABLE prices_monthly {
 - Pydantic: helps with type checking and data validation
 - FastAPI: framework for building APIs
 
-requirements.txt was generated using the `pip freeze > requirements.txt`
-command in the virtual env
-
