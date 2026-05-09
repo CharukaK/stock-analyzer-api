@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import ClassVar
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -5,18 +6,18 @@ from pydantic import BaseModel, ConfigDict, Field
 class MetaData(BaseModel):
     information: str = Field(alias="1. Information")
     symbol: str = Field(alias="2. Symbol")
-    last_refreshed: str = Field(alias="3. Last Refreshed")
+    last_refreshed: datetime = Field(alias="3. Last Refreshed")
     time_zone: str = Field(alias="4. Time Zone")
 
     model_config: ClassVar[ConfigDict] = ConfigDict(populate_by_name=True)
 
 
 class MonthlyDataPoint(BaseModel):
-    open: str = Field(alias="1. open")
-    high: str = Field(alias="2. high")
-    low: str = Field(alias="3. low")
-    close: str = Field(alias="4. close")
-    volume: str = Field(alias="5. volume")
+    open: float = Field(alias="1. open")
+    high: float = Field(alias="2. high")
+    low: float = Field(alias="3. low")
+    close: float = Field(alias="4. close")
+    volume: int = Field(alias="5. volume")
 
     model_config: ClassVar[ConfigDict] = ConfigDict(populate_by_name=True)
 
@@ -28,4 +29,3 @@ class AlphaVantageMonthlyResponse(BaseModel):
     )
 
     model_config: ClassVar[ConfigDict] = ConfigDict(populate_by_name=True)
-

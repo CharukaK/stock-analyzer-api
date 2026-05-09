@@ -4,7 +4,7 @@ Simple API to give you insights on a particular Stock name
 
 tech spec: [link](./doc/dev.md)
 
-## Setting up
+## Setting up for development
 
 Run the following command to setup the development environment
 
@@ -15,6 +15,17 @@ make install-dev
 after installation run the command `source .venv/bin/activate`
 
 this will initialize the python virtual environment to attached to the project
+
+Run the following command to start the development server
+```
+make run-dev
+```
+
+For testing run
+```
+make test
+```
+
 
 ## Project structure
 
