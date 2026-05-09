@@ -11,8 +11,10 @@ install:
 test: 
 	@$(BIN)/pytest
 
-run:
-	@$(BIN)/python main.py
+create_db:
+	@sqlite3 stock_analyzer.db < db/schema.sql
+run-dev: create_db
+	@fastapi dev
 
 clean:
 	@rm -rf $(VENV)
