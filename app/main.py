@@ -1,8 +1,15 @@
+import logging
 from fastapi import FastAPI
 from app.clients import AlphaVantageClient
+from app.core import settings
 from app.db import open_db
 from app.routes import health_router, symbols_router
 from contextlib import asynccontextmanager
+
+logging.basicConfig(
+    level=logging.DEBUG if settings.DEBUG else logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
 
 
 @asynccontextmanager

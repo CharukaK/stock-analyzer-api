@@ -32,7 +32,7 @@ make test
 ```
 .
 ├── app                             # root
-│   ├── clients                     # contains implementation of clients(db, api)
+│   ├── clients                     # contains implementation of external api clients
 │   ├── core                        # env configuration
 │   ├── dependencies.py             # lifecycle dependencies
 │   ├── main.py                     # starting point

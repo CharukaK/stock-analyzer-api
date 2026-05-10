@@ -10,9 +10,11 @@ class SymbolsRepository:
 
     async def get(self, symbol: str) -> SymbolRow | None:
         async with self._conn.execute(
-            "SELECT symbol, info, last_refreshed, timezone",
-            "FROM symbols WHERE symbol = ?",
-            (symbol),
+            """
+                SELECT symbol, information, last_refreshed, time_zone
+                FROM symbols WHERE symbol = ?
+            """,
+            (symbol,),
         ) as cursor:
             row = await cursor.fetchone()
             if row is None:
@@ -21,12 +23,14 @@ class SymbolsRepository:
 
     async def upsert(self, symbol: str, metadata: MetaData):
         await self._conn.execute(
-            "INSERT INTO symbols (symbol, information, last_refreshed, timezone)",
-            "VALUES (?,?,?,?)",
-            "ON CONFLICT(symbol) DO UPDATE SET",
-            "   information = excluded.information",
-            "   last_refreshed = excluded.last_refreshed",
-            "   timezone = excluded.timezone",
+            """
+                INSERT INTO symbols (symbol, information, last_refreshed, time_zone)
+                VALUES (?,?,?,?)
+                ON CONFLICT(symbol) DO UPDATE SET
+                   information = excluded.information,
+                   last_refreshed = excluded.last_refreshed,
+                   time_zone = excluded.time_zone
+            """,
             (
                 metadata.symbol,
                 metadata.information,

@@ -12,7 +12,7 @@ def get_alphavantage_client(request: Request) -> AlphaVantageClient:
 
 
 def get_db_conn(request: Request) -> aiosqlite.Connection:
-    return request.app.db_conn
+    return request.app.state.db_conn
 
 
 def get_symbol_service(

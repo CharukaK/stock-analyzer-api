@@ -9,13 +9,13 @@ class PricesRepository:
     def __init__(self, conn: aiosqlite.Connection) -> None:
         self._conn: aiosqlite.Connection = conn
 
-    async def get_annual(self, symbol: str, year: int) -> list[PriceRow] | None:
+    async def get_annual(self, symbol: str, year: int) -> list[PriceRow]:
         async with self._conn.execute(
             """
                 SELECT symbol, month_start_date, last_refreshed, open, close, high, low, volume
                 FROM prices_monthly WHERE symbol = ? AND strftime('%Y', month_start_date) = ?
             """,
-            (symbol, year),
+            (symbol, str(year)),
         ) as cursor:
             rows = await cursor.fetchall()
             return [PriceRow(**dict(row)) for row in rows]
