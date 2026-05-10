@@ -25,9 +25,9 @@ async def test_returns_cached_data_for_historical_year(
     mock_symbol_repo.get.assert_awaited_once_with("IBM")  # pyright: ignore[reportAny]
     symbol_service._av_client.get_monthly_price_data.assert_not_awaited()  # pyright: ignore[reportAny]
     assert isinstance(result, AnnualSummaryResponse)
-    assert result.high == 170.0  # max of 160 and 170
-    assert result.low == 130.0  # min of 130 and 145
-    assert result.volume == 1_900_000
+    assert result.high == "170.0000"
+    assert result.low == "130.0000"  
+    assert result.volume == "1900000"
 
 
 @pytest.mark.asyncio

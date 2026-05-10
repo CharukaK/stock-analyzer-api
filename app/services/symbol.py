@@ -91,4 +91,6 @@ class SymbolService:
             low = min(low, row.low)
             volume += row.volume
 
-        return AnnualSummaryResponse(high=high, low=low, volume=volume)
+        return AnnualSummaryResponse(
+            high=f"{high:.4f}", low=f"{low:.4f}", volume=f"{volume}"
+        )
