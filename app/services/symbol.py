@@ -29,7 +29,6 @@ class SymbolService:
         self, symbol: str, year: int
     ) -> AnnualSummaryResponse:
         logger.info("recieved request for %s year=%s", symbol, year)
-        current_year = datetime.now(timezone.utc).year
         try:
             symbol_metadata = await self._symbol_repository.get(symbol)
         except aiosqlite.Error as e:
