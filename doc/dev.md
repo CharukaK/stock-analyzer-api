@@ -1,7 +1,7 @@
 # Stock Analyzer API
 
 This is an API that allows consumers to view a summary of the market data for
-particular time period 
+particular time period
 
 ```hurl
 GET /symbols/IBM/annual/2005
