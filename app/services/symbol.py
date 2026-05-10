@@ -38,12 +38,12 @@ class SymbolService:
         logger.debug("symbol_metadata = %s", symbol_metadata)
 
         if symbol_metadata is None:
-            # fetch data
             await self._fetch_and_store_data(symbol)
         else:
-            # api data is updated once a day so last_checked is enough to determine staleness
             last_cheked_year = datetime.fromisoformat(symbol_metadata.last_checked).year
+            # only need to consider fetching if the last_cheked_year is less than or equal to current
             if year >= last_cheked_year:
+                # api data is updated once a day so last_checked is enough to determine staleness
                 is_cache_stale = symbol_metadata.last_checked != datetime.now(
                     timezone.utc
                 ).strftime("%Y-%m-%d")
