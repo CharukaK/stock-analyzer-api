@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS symbols(
     symbol TEXT PRIMARY KEY,
-    information TEXT,
     last_refreshed TEXT,
+    last_checked TEXT,
     time_zone TEXT
 );
 

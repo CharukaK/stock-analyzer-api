@@ -30,7 +30,6 @@ class SymbolService:
     ) -> AnnualSummaryResponse:
         logger.info("recieved request for %s year=%s", symbol, year)
         current_year = datetime.now(timezone.utc).year
-        is_current_year = year == current_year
         try:
             symbol_metadata = await self._symbol_repository.get(symbol)
         except aiosqlite.Error as e:
@@ -42,15 +41,16 @@ class SymbolService:
         if symbol_metadata is None:
             # fetch data
             await self._fetch_and_store_data(symbol)
-        elif is_current_year:
-            # if last fetched date and current date delta (day) > 1
-            # TODO: this is logic does not check if the market was closed for more than 1 day
-            is_cache_stale = datetime.now(timezone.utc) - datetime.fromisoformat(
-                symbol_metadata.last_refreshed
-            ).replace(tzinfo=timezone.utc) > timedelta(days=1)
+        else:
+            # api data is updated once a day so last_checked is enough to determine staleness
+            last_cheked_year = datetime.fromisoformat(symbol_metadata.last_checked).year
+            if year >= last_cheked_year:
+                is_cache_stale = symbol_metadata.last_checked != datetime.now(
+                    timezone.utc
+                ).strftime("%Y-%m-%d")
 
-            if is_cache_stale:
-                await self._fetch_and_store_data(symbol)
+                if is_cache_stale:
+                    await self._fetch_and_store_data(symbol)
 
         return await self._aggregate_monthly(symbol, year)
 
@@ -61,7 +61,11 @@ class SymbolService:
             logger.error("data sourcing failed for %s: %s", symbol, e)
             raise ExternalAPIError()
         try:
-            await self._symbol_repository.upsert(symbol, response.metadata)
+            await self._symbol_repository.upsert(
+                symbol,
+                response.metadata,
+                datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            )
             await self._prices_repository.upsert_monthly(
                 symbol,
                 response.monthly_time_series,

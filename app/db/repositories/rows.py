@@ -2,9 +2,9 @@ from pydantic import BaseModel
 
 
 class SymbolRow(BaseModel):
-    information: str
     symbol: str
     last_refreshed: str
+    last_checked: str
     time_zone: str
 
 

@@ -11,7 +11,7 @@ class SymbolsRepository:
     async def get(self, symbol: str) -> SymbolRow | None:
         async with self._conn.execute(
             """
-                SELECT symbol, information, last_refreshed, time_zone
+                SELECT symbol, last_refreshed, time_zone, last_checked
                 FROM symbols WHERE symbol = ?
             """,
             (symbol,),
@@ -21,21 +21,21 @@ class SymbolsRepository:
                 return None
             return SymbolRow(**dict(row))
 
-    async def upsert(self, symbol: str, metadata: MetaData):
+    async def upsert(self, symbol: str, metadata: MetaData, last_checked: str):
         await self._conn.execute(
             """
-                INSERT INTO symbols (symbol, information, last_refreshed, time_zone)
+                INSERT INTO symbols (symbol, last_refreshed, time_zone, last_checked)
                 VALUES (?,?,?,?)
                 ON CONFLICT(symbol) DO UPDATE SET
-                   information = excluded.information,
                    last_refreshed = excluded.last_refreshed,
-                   time_zone = excluded.time_zone
+                   time_zone = excluded.time_zone,
+                   last_checked = excluded.last_checked
             """,
             (
                 metadata.symbol,
-                metadata.information,
                 metadata.last_refreshed,
                 metadata.time_zone,
+                last_checked,
             ),
         )
         await self._conn.commit()
