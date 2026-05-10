@@ -131,6 +131,7 @@ TABLE prices_monthly {
 - Pydantic: helps with type checking and data validation
 - FastAPI: framework for building APIs
 - Pydantic Settings: helps with managing environment variable and configurations
-- httpx: provides a HTTP clientn with async capabilities
+- httpx: provides a HTTP client with async capabilities
+- aiosqlite: provides an async wrapper around sqlite
 
 
