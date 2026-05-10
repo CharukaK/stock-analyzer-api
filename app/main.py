@@ -39,7 +39,7 @@ async def external_api_error_handler(_: Request, exc: ExternalAPIError):
     return JSONResponse(status_code=503, content={"detail": str(exc)})
 
 
-@app.exception_handler(Exception)
+@app.exception_handler(DataBaseError)
 async def database_error_handler(_: Request, exc: DataBaseError):
     return JSONResponse(status_code=500, content={"detail": str(exc)})
 
