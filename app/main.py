@@ -5,6 +5,7 @@ from app.clients import AlphaVantageClient
 from app.core import settings
 from app.db import open_db
 from app.exceptions import ExternalAPIError, SymbolNotFoundError
+from app.exceptions.exceptions import DataBaseError
 from app.routes import health_router, symbols_router
 from contextlib import asynccontextmanager
 
@@ -36,6 +37,11 @@ async def symbol_not_found_handler(_: Request, exc: SymbolNotFoundError):
 @app.exception_handler(ExternalAPIError)
 async def external_api_error_handler(_: Request, exc: ExternalAPIError):
     return JSONResponse(status_code=503, content={"detail": str(exc)})
+
+
+@app.exception_handler(Exception)
+async def database_error_handler(_: Request, exc: DataBaseError):
+    return JSONResponse(status_code=500, content={"detail": str(exc)})
 
 
 @app.exception_handler(Exception)

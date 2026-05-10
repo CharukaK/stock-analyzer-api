@@ -7,3 +7,7 @@ class SymbolNotFoundError(Exception):
 class ExternalAPIError(Exception):
     def __init__(self, message: str = "error reaching data provider") -> None:
         super().__init__(message)
+
+class DataBaseError(Exception):
+    def __init__(self, message: str = "database error occured") -> None:
+        super().__init__(message)
