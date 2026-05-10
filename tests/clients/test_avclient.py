@@ -32,7 +32,7 @@ async def test_monthly_api_data_fetch(httpx_mock: HTTPXMock):
 
     assert result.metadata.symbol == "IBM"
     assert "2026-04-30" in result.monthly_time_series
-    assert result.monthly_time_series["2026-04-30"].close == "155.00"
+    assert result.monthly_time_series["2026-04-30"].close == 155
 
 @pytest.mark.asyncio
 async def test_get_monthly_price_data_http_error(httpx_mock: HTTPXMock):
