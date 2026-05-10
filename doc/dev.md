@@ -87,10 +87,10 @@ would look like the following
 - [ ] Check the database if the symbol data is present
     - [ ] if the year provided in the request is not current year fetch the
     related data from database and respond
-    - [ ] if the year provided is the current year compare the last fetched
-    date vs current date and if it is greater than 24hrs fetch the data again
-    respond the user with values and update the database, if it is less than 24
-    hrs respond directly from database
+    - [ ] if the year provided is greater than the last refreshed date year
+    compare the last fetched date vs current date and if it is greater than
+    24hrs fetch the data again respond the user with values and update the
+    database, if it is less than 24 hrs respond directly from database
 - [ ] if the symbol data is not present in the database, request from the
 AlphaVantage API, process and store data and respond the client with the
 required data
