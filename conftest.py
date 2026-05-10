@@ -40,8 +40,8 @@ def fresh_symbol_row() -> SymbolRow:
     """last_refreshed is within the last hour — cache is fresh."""
     return SymbolRow(
         symbol="IBM",
-        information="Monthly Prices",
         last_refreshed=_iso(datetime.now(timezone.utc)),
+        last_checked=_iso(datetime.now(timezone.utc)),
         time_zone="US/Eastern",
     )
 
@@ -51,7 +51,7 @@ def stale_symbol_row() -> SymbolRow:
     """last_refreshed is 2 days ago — cache is stale."""
     return SymbolRow(
         symbol="IBM",
-        information="Monthly Prices",
+        last_checked=_iso(datetime.now(timezone.utc) - timedelta(days=2)),
         last_refreshed=_iso(datetime.now(timezone.utc) - timedelta(days=2)),
         time_zone="US/Eastern",
     )
