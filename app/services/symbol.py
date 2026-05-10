@@ -1,11 +1,16 @@
 import logging
 import sys
 from datetime import datetime, timedelta, timezone
+
+import httpx
+from pydantic import ValidationError
 from app.clients import AlphaVantageClient
 from app.db.repositories import SymbolsRepository, PricesRepository
+from app.exceptions import ExternalAPIError, SymbolNotFoundError
 from app.models.responses import AnnualSummaryResponse
 
 logger = logging.getLogger()
+
 
 class SymbolService:
     def __init__(
@@ -28,7 +33,7 @@ class SymbolService:
         symbol_metadata = await self._symbol_repository.get(symbol)
 
         logger.debug("symbol_metadata = %s", symbol_metadata)
-        
+
         if symbol_metadata is None:
             # fetch data
             await self._fetch_and_store_data(symbol)
@@ -43,7 +48,11 @@ class SymbolService:
         return await self._aggregate_monthly(symbol, year)
 
     async def _fetch_and_store_data(self, symbol: str):
-        response = await self._av_client.get_monthly_price_data(symbol)
+        try:
+            response = await self._av_client.get_monthly_price_data(symbol)
+        except (httpx.HTTPStatusError, httpx.RequestError, ValidationError) as e:
+            logger.error("data sourcing failed for %s: %s", symbol, e)
+            raise ExternalAPIError()
         await self._symbol_repository.upsert(symbol, response.metadata)
         await self._prices_repository.upsert_monthly(
             symbol,
@@ -51,12 +60,10 @@ class SymbolService:
             response.metadata.last_refreshed.isoformat(),
         )
 
-    async def _aggregate_monthly(
-        self, symbol: str, year: int
-    ) -> AnnualSummaryResponse | None:
+    async def _aggregate_monthly(self, symbol: str, year: int) -> AnnualSummaryResponse:
         rows = await self._prices_repository.get_annual(symbol, year)
         if not rows:
-            return None
+            raise SymbolNotFoundError(symbol, year)
         high: float = sys.float_info.min
         low: float = sys.float_info.max
         volume: int = 0
