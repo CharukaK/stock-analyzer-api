@@ -22,6 +22,9 @@ create_db:
 run-dev: create_db
 	@fastapi dev
 
+run: create_db
+	@fastapi run
+
 clean:
 	@rm -rf $(VENV)
 	@find . -type d -name "__pycache__" -exec rm -rf {} +
