@@ -49,6 +49,7 @@ after installation run the command `source .venv/bin/activate`
 this will initialize the python virtual environment attached to the project
 
 **Initializing database**
+
 you can run the following command to initialize the database in the repo root
 ```
 make create-db
@@ -56,6 +57,7 @@ make create-db
 now you should be able to see the sqlite db file in the repo root named `stock_analyzer.db`
 
 **Setting up env file**
+
 copy the `.env.example` to `.env` using the following command
 ```bash
 cp .env.example .env
@@ -71,6 +73,7 @@ you would require the following variables in order to run the application
 
 
 **Running the application**
+
 after setting up the file to use the following command to start the development server
 ```
 make run-dev
@@ -87,6 +90,7 @@ curl -v <app-url>/symbols/IBM/annual/2005
 ```
 
 **Testing**:
+
 Use the following command to run unit tests
 ```
 make test
