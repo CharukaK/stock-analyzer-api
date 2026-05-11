@@ -41,7 +41,14 @@ make install-dev
 
 after installation run the command `source .venv/bin/activate`
 
-this will initialize the python virtual environment to attached to the project
+this will initialize the python virtual environment attached to the project
+
+**Initializing database**
+you can run the following command to initialize the database in the repo root
+```
+make create-db
+```
+now you should be able to see the sqlite db file in the repo root named `stock_analyzer.db`
 
 **Setting up env file**
 copy the `.env.example` to `.env` using the following command
@@ -54,7 +61,7 @@ and fill in the required information
 you would require the following variables in order to run the application
 - **ALPHAVANTAGE_URL** => AlphaVantage base url
 - **ALPHAVANTAGE_API_KEY** => AlphaVantage api key
-- **DATABASE_URL** => path to sqlite database file
+- **DATABASE_URL** => path to sqlite database file (default: stock-analyzer.db)
 - **DEBUG** => Enable debug logging or not (True/False)
 
 after setting up the file to use the following command to start the development server
