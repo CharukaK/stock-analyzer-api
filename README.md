@@ -34,6 +34,11 @@ definitions:
 
 ## Setting up for development
 
+**Prerequisites**
+- Python 3.13+
+- make
+- An AlphaVantage API key (sign up here (https://www.alphavantage.co/support/#api-key))
+
 Run the following command to setup the development environment
 ```sh
 make install-dev
