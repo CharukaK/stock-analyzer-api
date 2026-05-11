@@ -64,6 +64,8 @@ you would require the following variables in order to run the application
 - **DATABASE_URL** => path to sqlite database file (default: stock-analyzer.db)
 - **DEBUG** => Enable debug logging or not (True/False)
 
+
+**Running the application**
 after setting up the file to use the following command to start the development server
 ```
 make run-dev
@@ -74,7 +76,13 @@ Inorder to run the production server use the following command
 make run
 ```
 
-To run test use:
+Once the app is running you can use curl to test
+```
+curl -v <app-url>/symbols/IBM/annual/2005
+```
+
+**Testing**:
+Use the following command to run unit tests
 ```
 make test
 ```
